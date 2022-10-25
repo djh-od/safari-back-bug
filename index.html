@@ -13,7 +13,7 @@
         const logContainer = document.getElementById('logs');
 
         function log(msg) {
-          logContainer.innerHTML += `<li>${msg}</li>`;
+          logContainer.innerHTML += `<li>${msg} - History State: ${JSON.stringify(history.state)} - History Length: ${history.length}</li>`;
         }
 
         log('Adding initial page load to history');
