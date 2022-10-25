@@ -16,14 +16,18 @@
           logContainer.innerHTML += `<li>${msg} - History State: ${JSON.stringify(history.state)} - History Length: ${history.length}</li>`;
         }
 
+        const url = new URL(location.href);
+
+        url.searchParams.set('page', 'initial');
+        history.pushState({ initialPage: true }, 'initial page load', url.href);
         log('Adding initial page load to history');
-        history.pushState({ initialPage: true }, 'initial page load');
 
         let count = 0;
         button.addEventListener('click', () => {
           count++;
+          url.searchParams.set('page', count.toString());
+          history.replaceState({ count: count }, `COUNT: ${count}`, url.href);
           log(`Replace state: ${count}`);
-          history.replaceState({ count: count }, `COUNT: ${count}`);
         });
 
         addEventListener('beforeunload', (event) => { 
