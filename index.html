@@ -36,7 +36,7 @@
         addEventListener('popstate', (event) => {
           log('potstate: ' + JSON.stringify(event.state));
 
-          return !!event.state?.initialPage;
+          return false;
         });
       })();
     </script>
