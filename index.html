@@ -29,12 +29,13 @@
         addEventListener('beforeunload', (event) => { 
           log('beforeunload');
           event.preventDefault();
-          
-          return confirm('Trying to leave, ok');
+
+          return false;
         });
 
         addEventListener('popstate', (event) => {
-          log('potstate: ' + JSON.stringify(event.state));
+          console.log('POPSTATE:', event);
+          log('popstate: ' + JSON.stringify(event.state));
 
           return false;
         });
