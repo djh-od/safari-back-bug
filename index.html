@@ -3,13 +3,15 @@
   <head>
   </head>
   <body>
-    <button id='addToHistory'>Add to History</button>
+    <button id='replace'>Replace State</button>
+    <button id='push'>Push State</button>
     <h2>Logs</h2>
     <ul id='logs'>
     </ul>
     <script>
       (function () { 
-        const button = document.getElementById('addToHistory');
+        const replaceButton = document.getElementById('replace');
+        const pushButton = document.getElementById('push');
         const logContainer = document.getElementById('logs');
 
         function log(msg) {
@@ -22,12 +24,25 @@
         history.pushState({ initialPage: true }, 'initial page load', url.href);
         log('Adding initial page load to history');
 
+        setTimeout(() => {
+          url.searchParams.set('page', 'initial2');
+          history.pushState({ initialPage: true }, 'initial page load', url.href);
+          log('Adding initial page load to history x2');
+        }, 1000);
+
         let count = 0;
-        button.addEventListener('click', () => {
+        replaceButton.addEventListener('click', () => {
           count++;
           url.searchParams.set('page', count.toString());
           history.replaceState({ count: count }, `COUNT: ${count}`, url.href);
           log(`Replace state: ${count}`);
+        });
+        
+        pushButton.addEventListener('click', () => {
+          count++;
+          url.searchParams.set('page', count.toString());
+          history.pushState({ count: count }, `COUNT: ${count}`, url.href);
+          log(`Push state: ${count}`);
         });
 
         addEventListener('beforeunload', (event) => { 
