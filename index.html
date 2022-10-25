@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <button id='addToHistory'>Add to History</button>
+    <h2>Logs</h2>
+    <ul id='logs'>
+    </ul>
+    <script>
+      (function () { 
+        const button = document.getElementById('addToHistory');
+        const logContainer = document.getElementById('logs');
+
+        function log(msg) {
+          logContainer.innerHTML += `<li>${msg}</li>`;
+        }
+
+        log('Adding initial page load to history');
+        history.pushState({ initialPage: true }, 'initial page load');
+
+        let count = 0;
+        button.addEventListener('click', () => {
+          count++;
+          log(`Replace state: ${count}`);
+          history.replaceState({ count: count }, `COUNT: ${count}`);
+        });
+
+        addEventListener('beforeunload', (event) => { 
+          log('beforeunload');
+          event.preventDefault();
+          
+          return confirm('Trying to leave, ok');
+        });
+
+        addEventListener('popstate', (event) => {
+          log('potstate: ' + JSON.stringify(event.state));
+
+          return !!event.state?.initialPage;
+        });
+      })();
+    </script>
+  </body>
+</html>
